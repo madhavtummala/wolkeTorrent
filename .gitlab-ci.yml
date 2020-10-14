@@ -1,0 +1,30 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - wolke
+
+run_wolke:
+  stage: wolke
+  script:
+  - rm -rf downloads
+  - mkdir downloads
+  - echo "created the folder"
+  - source to_download.sh
+  - echo "sourced the contents"
+  - echo $NAME
+  - echo $DOWNLOAD_LINK
+  - echo "starting download"
+  # - docker run -v $(pwd)/downloads:/w andrey01/aria2c --seed-time=0 -d /w $DOWNLOAD_LINK
+  - docker run -v $(pwd)/downloads:/downloads pataquets/webtorrent-cli download $DOWNLOAD_LINK -o /downloads
+  - echo "download complete"
+  - ls downloads/
+  - docker run -v $(pwd)/downloads:/w kramos/alpine-zip -r /w/$NAME.zip /w/
+  - echo "the downloaded contents are zipped"
+  - set the google service account credentials
+  - echo $WOLKE_TORRENT_KEY >> key.json
+  - echo "start building the upload docker container"
+  - docker build -t gdrive_upload .
+  - docker run gdrive_upload
+  - echo "downloaded contents are upload to shared gdrive folder"
