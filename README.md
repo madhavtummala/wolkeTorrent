@@ -1,6 +1,6 @@
 # Wolke Torrent
 
-With many ISP's and private networks blocking the torrent traffic, many are unable to use the p2p appliacation and awesome content offered by torrents. </br>
+**Advisable to configure your own kubernetes cluster for gitlab runners instead of using shared runners** </br>
 
 Wolke torrent provides a solution to this problem by downloading a torrent or a download url of choice in the cloud and transferring it to a shared google drive folder. There probably aren't any restrictions to download from google drive. Adding a file directly from the url to google drive without the user needed to download can be handy in some cases. </br>
 
